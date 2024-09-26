@@ -41,7 +41,7 @@ class TestClientRepository(unittest.TestCase):
         """
         Test that a new record is added successfully.
         """
-        new_record = {"ID": 3, "Name": "Charlie"}
+        new_record = {"Name": "Charlie"}
         self.repo.create(new_record)
 
         records = self.repo.list()

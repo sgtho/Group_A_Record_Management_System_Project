@@ -46,6 +46,7 @@ class ClientRepository:
 
         :param record: The client record to add (as a dictionary).
         """
+        record["ID"] = len(self.records) + 1
         self.records.append(record)
         self.save_records()
 
