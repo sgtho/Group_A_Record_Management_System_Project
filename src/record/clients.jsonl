@@ -1,2 +1,3 @@
 {"ID": 123, "Type": "Customer", "Name": "John Doe", "Address_Line_1": "123 Main St", "Address_Line_2": "Apt 4B", "Address_Line_3": "", "City": "New York", "State": "NY", "Zip_Code": "10001", "Country": "USA", "Phone_Number": "+1-555-555-5555"}
 {"ID": 123, "Type": "Customer", "Name": "John Doe", "Address_Line_1": "123 Main St", "Address_Line_2": "Apt 4B", "Address_Line_3": "", "City": "New York", "State": "NY", "Zip_Code": "10001", "Country": "USA", "Phone_Number": "+1-555-555-5555"}
+{"Name": "Shao", "Phone_Number": "0910362068", "Address_Line_1": "3F, KK Road", "Address_Line_2": "", "Address_Line_3": "", "City": "Taipei", "State": "Taipei", "Zip_Code": "231", "Country": "Taiwan", "Type": "Customer", "ID": 3}
