@@ -1,0 +1,3 @@
+{"Booking_Number": 1, "Client_ID": "123", "Airline_ID": "456", "Type": "Flight", "Date_Time": "2024", "Start_City": "UK", "End_City": "USA"}
+{"Booking_Number": 2, "Client_ID": "1231", "Airline_ID": "1312", "Type": "Flight", "Date_Time": "30/9/2024", "Start_City": "GER", "End_City": "FIN"}
+{"Booking_Number": 3, "Client_ID": "11", "Airline_ID": "12", "Type": "Flight", "Date_Time": "1/11/2024", "Start_City": "Korea", "End_City": "Japan"}
