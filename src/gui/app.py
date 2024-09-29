@@ -1,11 +1,12 @@
 import customtkinter as ctk
-from data.client_repository import ClientRepository
+from data import ClientRepository, AirlineRepository
 import gui.components as components
 
 
 class App:
-    def __init__(self, client_repo: ClientRepository):
+    def __init__(self, client_repo: ClientRepository, airline_repo: AirlineRepository):
         self.client_repo = client_repo
+        self.airline_repo = airline_repo
         self.active_tab = "client"
         self.build_app()
 
@@ -16,6 +17,7 @@ class App:
         self.app = ctk.CTk()
         self.app.geometry("1000x500")
         self.app.title("Travel Wings - Client Dashboard")
+        self.app.focus_force()
 
         # Configure grid layout (2 columns: sidebar and main content)
         self.app.grid_columnconfigure(0, weight=1)
@@ -46,7 +48,7 @@ class App:
             )
         else:
             self.active_view = components.AirlinesView(
-                root=self.app, client_repo=self.client_repo
+                root=self.app, airline_repo=self.airline_repo
             )
 
     def update_view(self):
@@ -72,5 +74,4 @@ class App:
         print("Adding flight...")
 
     def add_airline(self):
-        # Add airline logic
-        print("Adding airline...")
+        components.CreateAirlineModal(self.airline_repo, self.update_view)

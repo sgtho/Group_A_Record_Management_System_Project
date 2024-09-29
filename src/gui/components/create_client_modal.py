@@ -9,12 +9,11 @@ class CreateClientModal:
         new_window = ctk.CTkToplevel()
         new_window.title("New Client")
         new_window.geometry("800x600")
+        new_window.focus_force()
 
         # Input fields for client information
         def save_client():
             new_client = {
-                "ID": len(self.client_repo.list()) + 1,  # Auto-incrementing ID
-                "Type": "Client",  # Type is set to "Client"
                 "Name": name_entry.get(),
                 "Address_Line_1": line1_entry.get(),
                 "Address_Line_2": line2_entry.get(),

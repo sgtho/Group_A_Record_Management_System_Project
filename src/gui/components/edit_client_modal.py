@@ -10,6 +10,7 @@ class EditClientModal:
         self.view_window = ctk.CTkToplevel()
         self.view_window.title(f"Client ID #{client['ID']}")
         self.view_window.geometry("800x600")
+        self.view_window.focus_force()
 
         # Client ID
         ctk.CTkLabel(
@@ -193,6 +194,7 @@ class EditClientModal:
         self.confirmation_window = ctk.CTkToplevel(self.view_window)
         self.confirmation_window.title("Confirm Deletion")
         self.confirmation_window.geometry("400x200")
+        self.confirmation_window.focus_force()
 
         ctk.CTkLabel(
             self.confirmation_window,
@@ -234,6 +236,7 @@ class EditClientModal:
         self.confirmation_window = ctk.CTkToplevel(self.view_window)
         self.confirmation_window.title("Confirm Update")
         self.confirmation_window.geometry("400x200")
+        self.confirmation_window.focus_force()
 
         # Warning Label
         ctk.CTkLabel(

@@ -24,7 +24,7 @@ class ClientRepository:
         """
         records = []
         try:
-            with open(self.filename, 'r') as file:
+            with open(self.filename, "r") as file:
                 for line in file:
                     records.append(json.loads(line.strip()))
         except FileNotFoundError:
@@ -36,9 +36,9 @@ class ClientRepository:
         Saves all client records back to the JSONL file.
         Each record is written as a separate line in JSON format.
         """
-        with open(self.filename, 'w') as file:
+        with open(self.filename, "w") as file:
             for record in self.records:
-                file.write(json.dumps(record) + '\n')  # Write each record as a new line
+                file.write(json.dumps(record) + "\n")  # Write each record as a new line
 
     def create(self, record: dict):
         """
@@ -47,6 +47,7 @@ class ClientRepository:
         :param record: The client record to add (as a dictionary).
         """
         record["ID"] = len(self.records) + 1
+        record["Type"] = "Client"
         self.records.append(record)
         self.save_records()
 
