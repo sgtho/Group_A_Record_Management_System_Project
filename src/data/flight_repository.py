@@ -60,9 +60,9 @@ class FlightRepository:
 
     def get(self, booking_number: int):
         """
-        Retrieves a flight record by its booking number.
+        Retrieves a flight record by its Booking Number.
 
-        :param flight_id: The booking number of the flight to retrieve.
+        :param booking_number: The Booking Number of the flight to retrieve.
         :return: The flight record if found, otherwise None.
         """
         for record in self.records:
@@ -70,27 +70,27 @@ class FlightRepository:
                 return record
         return None
 
-    def search_by_client_id(self, name: str):
+    def search_by_client_id(self, client_id: str):
         """
-        Searches for flight records by name.
+        Searches for flight records by Client ID.
 
-        :param name: The name or partial name to search for.
-        :return: A list of flight records that match the provided name (case-insensitive).
+        :param client_id: The partial or full Client ID to search for.
+        :return: A list of flight records that match the provided Client ID.
         """
-        if len(name) == 0:
+        if len(client_id) == 0:
             return self.records
         filtered = []
         for record in self.records:
-            if record["Client_ID"].lower().startswith(name.lower()):
+            if str(record["Client_ID"]).startswith(client_id):
                 filtered.append(record)
         return filtered
 
     def search_by_booking_number(self, booking_number: str):
         """
-        Searches for flight records by partial or full booking number.
+        Searches for flight records by partial or full Booking Number.
 
-        :param flight_id: The partial or full booking number to search for.
-        :return: A list of flight records that match the provided booking number.
+        :param booking_number: The partial or full booking number to search for.
+        :return: A list of flight records that match the provided Booking Number.
         """
         if len(booking_number) == 0:
             return self.records
