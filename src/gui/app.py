@@ -1,12 +1,18 @@
 import customtkinter as ctk
-from data import ClientRepository, AirlineRepository
+from data import ClientRepository, AirlineRepository, FlightRepository
 import gui.components as components
 
 
 class App:
-    def __init__(self, client_repo: ClientRepository, airline_repo: AirlineRepository):
+    def __init__(
+        self,
+        client_repo: ClientRepository,
+        airline_repo: AirlineRepository,
+        flight_repo: FlightRepository,
+    ):
         self.client_repo = client_repo
         self.airline_repo = airline_repo
+        self.flight_repo = flight_repo
         self.active_tab = "client"
         self.build_app()
 
@@ -44,7 +50,7 @@ class App:
             )
         elif view == "flight":
             self.active_view = components.FlightsView(
-                root=self.app, client_repo=self.client_repo
+                root=self.app, flight_repo=self.flight_repo
             )
         else:
             self.active_view = components.AirlinesView(
@@ -57,21 +63,16 @@ class App:
     def handle_create(self, record_type):
         if record_type == "client":
             self.add_client()
-        elif record_type == "flights":
+        elif record_type == "flight":
             self.add_flight()
         else:
             self.add_airline()
-
-    def search_client(self):
-        # Search client logic
-        print("Searching client...")
 
     def add_client(self):
         components.CreateClientModal(self.client_repo, self.update_view)
 
     def add_flight(self):
-        # Add flight logic
-        print("Adding flight...")
+        components.CreateFlightModal(self.flight_repo, self.update_view)
 
     def add_airline(self):
         components.CreateAirlineModal(self.airline_repo, self.update_view)

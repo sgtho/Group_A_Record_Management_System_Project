@@ -24,7 +24,7 @@ class FlightRepository:
         """
         records = []
         try:
-            with open(self.filename, 'r') as file:
+            with open(self.filename, "r") as file:
                 for line in file:
                     records.append(json.loads(line.strip()))
         except FileNotFoundError:
@@ -36,9 +36,9 @@ class FlightRepository:
         Saves all flight records back to the JSONL file.
         Each record is written as a separate line in JSON format.
         """
-        with open(self.filename, 'w') as file:
+        with open(self.filename, "w") as file:
             for record in self.records:
-                file.write(json.dumps(record) + '\n')  # Write each record as a new line
+                file.write(json.dumps(record) + "\n")  # Write each record as a new line
 
     def create(self, record: dict):
         """
@@ -46,7 +46,8 @@ class FlightRepository:
 
         :param record: The flight booking number record to add (as a dictionary).
         """
-        record["Booking_Number"] = len(self.records) + 1
+        record["ID"] = len(self.records) + 1
+        record["Type"] = "Flight"
         self.records.append(record)
         self.save_records()
 
@@ -58,15 +59,15 @@ class FlightRepository:
         """
         return self.records
 
-    def get(self, booking_number: int):
+    def get(self, id: int):
         """
         Retrieves a flight record by its Booking Number.
 
-        :param booking_number: The Booking Number of the flight to retrieve.
+        :param id: The Booking Number of the flight to retrieve.
         :return: The flight record if found, otherwise None.
         """
         for record in self.records:
-            if record["Booking_Number"] == booking_number:
+            if record["ID"] == id:
                 return record
         return None
 
@@ -85,18 +86,18 @@ class FlightRepository:
                 filtered.append(record)
         return filtered
 
-    def search_by_booking_number(self, booking_number: str):
+    def search_by_id(self, id: int):
         """
         Searches for flight records by partial or full Booking Number.
 
-        :param booking_number: The partial or full booking number to search for.
+        :param id: The partial or full ID to search for.
         :return: A list of flight records that match the provided Booking Number.
         """
-        if len(booking_number) == 0:
+        if len(id) == 0:
             return self.records
         filtered = []
         for record in self.records:
-            if str(record["Booking_Number"]).startswith(booking_number):
+            if str(record["ID"]).startswith(id):
                 filtered.append(record)
         return filtered
 
@@ -107,7 +108,7 @@ class FlightRepository:
         :param updated_record: The updated flight record (as a dictionary).
         """
         for idx, flight in enumerate(self.records):
-            if flight["Booking_Number"] == updated_record["Booking_Number"]:
+            if flight["ID"] == updated_record["ID"]:
                 self.records[idx] = updated_record
                 break
         self.save_records()
@@ -119,7 +120,7 @@ class FlightRepository:
         :param record: The flight record to delete (as a dictionary).
         """
         for idx, flight in enumerate(self.records):
-            if flight["Booking_Number"] == record["Booking_Number"]:
+            if flight["ID"] == record["ID"]:
                 del self.records[idx]
                 break
         self.save_records()
