@@ -1,7 +1,8 @@
 import unittest
 import json
 import os
-from src.data.client_repository import ClientRepository
+from src.data import ClientRepository
+
 
 class TestClientRepository(unittest.TestCase):
 
@@ -9,16 +10,13 @@ class TestClientRepository(unittest.TestCase):
         """
         This method is called before each test. It sets up a temporary file and initial records for testing.
         """
-        self.filename = 'test_clients.jsonl'
+        self.filename = "test_clients.jsonl"
         # records have other fields as well but we only
         # set ID and Name as this is all we need for the tests
-        self.initial_records = [
-            {"ID": 1, "Name": "Alice"},
-            {"ID": 2, "Name": "Bob"}
-        ]
-        with open(self.filename, 'w') as file:
+        self.initial_records = [{"ID": 1, "Name": "Alice"}, {"ID": 2, "Name": "Bob"}]
+        with open(self.filename, "w") as file:
             for record in self.initial_records:
-                file.write(json.dumps(record) + '\n')
+                file.write(json.dumps(record) + "\n")
         self.repo = ClientRepository(self.filename)
 
     def tearDown(self):
@@ -111,5 +109,6 @@ class TestClientRepository(unittest.TestCase):
         self.assertEqual(len(records), 1)
         self.assertNotIn(record_to_delete, records)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

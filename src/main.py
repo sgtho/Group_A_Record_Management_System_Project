@@ -1,5 +1,5 @@
 from gui import App
-from data.client_repository import ClientRepository
+from data import ClientRepository
 
 client_repo = ClientRepository("src/record/clients.jsonl")
 
