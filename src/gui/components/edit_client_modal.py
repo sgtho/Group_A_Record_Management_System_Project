@@ -12,6 +12,13 @@ class EditClientModal:
         self.view_window.geometry("800x600")
         self.view_window.focus_force()
 
+        self.error_label = ctk.CTkLabel(
+            self.view_window,
+            text="",
+            text_color="#e67a67",
+            font=("Arial", 16, "bold"),
+        )
+
         # Client ID
         ctk.CTkLabel(
             self.view_window,
@@ -182,7 +189,15 @@ class EditClientModal:
             "Zip_Code": self.zip_entry.get(),
             "Country": self.country_entry.get(),
         }
-        self.client_repo.update(updated_client)  # Save the updated client details
+
+        try:
+            self.client_repo.update(updated_client)  # Save the updated client details
+        except Exception as e:
+            self.error_label.pack()
+            self.error_label.configure(text=f"Error creating client: {e}")
+            self.confirmation_window.destroy()
+            return
+
         self.confirmation_window.destroy()
         self.view_window.destroy()  # Close the window after updating
         if self.callback is not None:
