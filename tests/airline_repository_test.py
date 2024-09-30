@@ -3,22 +3,23 @@ import json
 import os
 from src.data.airline_repository import AirlineRepository
 
+
 class TestAirlineRepository(unittest.TestCase):
 
     def setUp(self):
         """
         This method is called before each test. It sets up a temporary file and initial records for testing.
         """
-        self.filename = 'test_airlines.jsonl'
-        
+        self.filename = "test_airlines.jsonl"
+
         # records have other fields as well but we only set ID and Name as this is all we need for the tests
         self.initial_records = [
-            {"ID": 1, "Name": "Global Airline"},
-            {"ID": 2, "Name": "WingAir"}
+            {"ID": 1, "Type": "Airline", "Company_Name": "Global Airline"},
+            {"ID": 2, "Type": "Airline", "Company_Name": "WingAir"},
         ]
-        with open(self.filename, 'w') as file:
+        with open(self.filename, "w") as file:
             for record in self.initial_records:
-                file.write(json.dumps(record) + '\n')
+                file.write(json.dumps(record) + "\n")
         self.repo = AirlineRepository(self.filename)
 
     def tearDown(self):
@@ -34,14 +35,14 @@ class TestAirlineRepository(unittest.TestCase):
         """
         records = self.repo.load_records()
         self.assertEqual(len(records), 2)
-        self.assertEqual(records[0]["Name"], "Global Airline")
-        self.assertEqual(records[1]["Name"], "WingAir")
+        self.assertEqual(records[0]["Company_Name"], "Global Airline")
+        self.assertEqual(records[1]["Company_Name"], "WingAir")
 
     def test_create_record(self):
         """
         Test that a new record is added successfully.
         """
-        new_record = {"Name": "Space Air"}
+        new_record = {"Company_Name": "Space Air"}
         self.repo.create(new_record)
 
         records = self.repo.list()
@@ -54,8 +55,8 @@ class TestAirlineRepository(unittest.TestCase):
         """
         records = self.repo.list()
         self.assertEqual(len(records), 2)
-        self.assertEqual(records[0]["Name"], "Global Airline")
-        self.assertEqual(records[1]["Name"], "WingAir")
+        self.assertEqual(records[0]["Company_Name"], "Global Airline")
+        self.assertEqual(records[1]["Company_Name"], "WingAir")
 
     def test_get_record_by_id(self):
         """
@@ -63,7 +64,7 @@ class TestAirlineRepository(unittest.TestCase):
         """
         record = self.repo.get(1)
         self.assertIsNotNone(record)
-        self.assertEqual(record["Name"], "Global Airline")
+        self.assertEqual(record["Company_Name"], "Global Airline")
 
         record = self.repo.get(999)  # Non-existing ID
         self.assertIsNone(record)
@@ -74,7 +75,7 @@ class TestAirlineRepository(unittest.TestCase):
         """
         result = self.repo.search_by_name("Glo")
         self.assertEqual(len(result), 1)
-        self.assertEqual(result[0]["Name"], "Global Airline")
+        self.assertEqual(result[0]["Company_Name"], "Global Airline")
 
         result = self.repo.search_by_name("Nonexistent")
         self.assertEqual(len(result), 0)
@@ -94,22 +95,23 @@ class TestAirlineRepository(unittest.TestCase):
         """
         Test that an existing record is updated correctly.
         """
-        updated_record = {"ID": 1, "Name": "Worldwide Airline"}
+        updated_record = {"ID": 1, "Company_Name": "Worldwide Airline"}
         self.repo.update(updated_record)
 
         record = self.repo.get(1)
-        self.assertEqual(record["Name"], "Worldwide Airline")
+        self.assertEqual(record["Company_Name"], "Worldwide Airline")
 
     def test_delete_record(self):
         """
         Test that a record is deleted successfully.
         """
-        record_to_delete = {"ID": 1, "Name": "Global Airline"}
+        record_to_delete = {"ID": 1, "Company_Name": "Global Airline"}
         self.repo.delete(record_to_delete)
 
         records = self.repo.list()
         self.assertEqual(len(records), 1)
         self.assertNotIn(record_to_delete, records)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
