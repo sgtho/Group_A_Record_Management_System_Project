@@ -18,21 +18,30 @@ class FlightsView:
         )
         search_frame.pack(fill="x", pady=0)
 
-        search_label = ctk.CTkLabel(
+        dashboard_label = ctk.CTkLabel(
             master=search_frame,
             text="Flights Dashboard",
             font=("Arial", 32, "bold"),
             bg_color="transparent",
         )
-        search_label.pack(anchor="w")
+        dashboard_label.pack(anchor="w")
 
+        search_label = ctk.CTkLabel(
+            master=search_frame,
+            text="Search start city or ID",
+            font=("Arial", 16, "normal"),
+            bg_color="transparent",
+        )
+        search_label.pack(anchor="w")
+        self.search_var = ctk.StringVar()
+        self.search_var.trace_add("write", self.load_flight_data)
         search_entry = ctk.CTkEntry(
             master=search_frame,
             width=200,
             height=30,
-            placeholder_text="Search name or ID...",
+            textvariable=self.search_var,
         )
-        search_entry.pack(anchor="w", pady=30)
+        search_entry.pack(anchor="w", pady=0)
 
         # Flight Table Header
         self.table_frame = ctk.CTkFrame(master=content_frame)
@@ -65,7 +74,7 @@ class FlightsView:
         # Load and display initial flight data
         self.load_flight_data()
 
-    def load_flight_data(self):
+    def load_flight_data(self, *args):
         """Load and display flight data from the repository."""
         # Clear old data
         for widget in self.table_frame.winfo_children():
@@ -97,6 +106,12 @@ class FlightsView:
 
         # Fetching flight data from the repository
         flight_data = self.flight_repo.list()
+        search_value = self.search_var.get()
+        if search_value != "":
+            if str.isdigit(search_value):
+                flight_data = self.flight_repo.search_by_id(search_value)
+            else:
+                flight_data = self.flight_repo.search_by_start_city(search_value)
 
         # Display flight data in the UI
         for flight in flight_data:

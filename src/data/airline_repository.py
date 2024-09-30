@@ -82,7 +82,7 @@ class AirlineRepository:
             return self.records
         filtered = []
         for record in self.records:
-            if record["Name"].lower().startswith(name.lower()):
+            if record["Company_Name"].lower().startswith(name.lower()):
                 filtered.append(record)
         return filtered
 

@@ -71,18 +71,18 @@ class FlightRepository:
                 return record
         return None
 
-    def search_by_client_id(self, client_id: str):
+    def search_by_start_city(self, start_city: str):
         """
-        Searches for flight records by Client ID.
+        Searches for flight records by Start City.
 
-        :param client_id: The partial or full Client ID to search for.
+        :param start_city: The partial or full Start City to search for.
         :return: A list of flight records that match the provided Client ID.
         """
-        if len(client_id) == 0:
+        if len(start_city) == 0:
             return self.records
         filtered = []
         for record in self.records:
-            if str(record["Client_ID"]).startswith(client_id):
+            if str(record["Start_City"]).startswith(start_city):
                 filtered.append(record)
         return filtered
 
