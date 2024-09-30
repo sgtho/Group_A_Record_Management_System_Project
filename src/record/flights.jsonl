@@ -1,0 +1,3 @@
+{"ID": 1, "Client_ID": "1231", "Airline_ID": "1312", "Type": "Flight", "Date_Time": "30/9/2024", "Start_City": "GER", "End_City": "FIN"}
+{"ID": 2, "Type": "Flight", "Client_ID": "11", "Airline_ID": "12", "Date_Time": "1/11/2024", "Start_City": "Korea", "End_City": "Abu Dabi"}
+{"ID": 3, "Type": "Flight", "Client_ID": "1111", "Airline_ID": "2222", "Date_Time": "121rsa", "Start_City": "fasdfasdf", "End_City": "asdfasdf"}

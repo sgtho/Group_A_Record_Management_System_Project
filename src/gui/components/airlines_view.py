@@ -18,21 +18,30 @@ class AirlinesView:
         )
         search_frame.pack(fill="x", pady=0)
 
-        search_label = ctk.CTkLabel(
+        dashboard_label = ctk.CTkLabel(
             master=search_frame,
             text="Airlines Dashboard",
             font=("Arial", 32, "bold"),
             bg_color="transparent",
         )
-        search_label.pack(anchor="w")
+        dashboard_label.pack(anchor="w")
 
+        search_label = ctk.CTkLabel(
+            master=search_frame,
+            text="Search start city or ID",
+            font=("Arial", 16, "normal"),
+            bg_color="transparent",
+        )
+        search_label.pack(anchor="w")
+        self.search_var = ctk.StringVar()
+        self.search_var.trace_add("write", self.load_airline_data)
         search_entry = ctk.CTkEntry(
             master=search_frame,
             width=200,
             height=30,
-            placeholder_text="Search name or ID...",
+            textvariable=self.search_var,
         )
-        search_entry.pack(anchor="w", pady=30)
+        search_entry.pack(anchor="w", pady=0)
 
         # Airline Table Header
         self.table_frame = ctk.CTkFrame(master=content_frame)
@@ -57,7 +66,7 @@ class AirlinesView:
         # Load and display initial airline data
         self.load_airline_data()
 
-    def load_airline_data(self):
+    def load_airline_data(self, *args):
         """Load and display airlinr data from the repository."""
         # Clear old data
         for widget in self.table_frame.winfo_children():
@@ -81,6 +90,12 @@ class AirlinesView:
 
         # Fetching airline data from the repository
         airline_data = self.airline_repo.list()
+        search_value = self.search_var.get()
+        if search_value != "":
+            if str.isdigit(search_value):
+                airline_data = self.airline_repo.search_by_id(search_value)
+            else:
+                airline_data = self.airline_repo.search_by_name(search_value)
 
         # Display airline data in the UI
         for airline in airline_data:
