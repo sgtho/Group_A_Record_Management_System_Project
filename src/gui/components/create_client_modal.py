@@ -4,40 +4,23 @@ from data.client_repository import ClientRepository
 
 class CreateClientModal:
     def __init__(self, client_repo: ClientRepository, callback):
+        self.callback = callback
         self.client_repo = client_repo
         """Method to open a new window for adding a new client."""
-        new_window = ctk.CTkToplevel()
-        new_window.title("New Client")
-        new_window.geometry("800x600")
-        new_window.focus_force()
-
-        # Input fields for client information
-        def save_client():
-            new_client = {
-                "Name": name_entry.get(),
-                "Address_Line_1": line1_entry.get(),
-                "Address_Line_2": line2_entry.get(),
-                "Address_Line_3": line3_entry.get(),
-                "City": city_entry.get(),
-                "State": state_entry.get(),
-                "Zip_Code": zip_entry.get(),
-                "Country": country_entry.get(),
-                "Phone_Number": phone_entry.get(),
-            }
-            self.client_repo.create(new_client)
-            if callback is not None:
-                callback()
-            new_window.destroy()
+        self.new_window = ctk.CTkToplevel()
+        self.new_window.title("New Client")
+        self.new_window.geometry("800x600")
+        self.new_window.focus_force()
 
         # Client Info (Contact)
-        ctk.CTkLabel(new_window, text="New Client", font=("Arial", 20, "bold")).pack(
-            pady=10
-        )
-        ctk.CTkLabel(new_window, text="Contact", font=("Arial", 16, "bold")).pack(
+        ctk.CTkLabel(
+            self.new_window, text="New Client", font=("Arial", 20, "bold")
+        ).pack(pady=10)
+        ctk.CTkLabel(self.new_window, text="Contact", font=("Arial", 16, "bold")).pack(
             anchor="w", padx=20
         )
 
-        contact_frame = ctk.CTkFrame(new_window)
+        contact_frame = ctk.CTkFrame(self.new_window)
         contact_frame.pack(pady=10, padx=20, fill="x")
 
         ctk.CTkLabel(contact_frame, text="Client Name: *").grid(
@@ -51,11 +34,11 @@ class CreateClientModal:
         phone_entry.grid(row=0, column=3, padx=10)
 
         # Client Info (Address)
-        ctk.CTkLabel(new_window, text="Address", font=("Arial", 16, "bold")).pack(
+        ctk.CTkLabel(self.new_window, text="Address", font=("Arial", 16, "bold")).pack(
             anchor="w", padx=20
         )
 
-        address_frame = ctk.CTkFrame(new_window)
+        address_frame = ctk.CTkFrame(self.new_window)
         address_frame.pack(pady=10, padx=20, fill="x")
 
         ctk.CTkLabel(address_frame, text="Line 1: *").grid(
@@ -95,7 +78,7 @@ class CreateClientModal:
         country_entry.grid(row=3, column=1, padx=10)
 
         # Save and Close buttons
-        button_frame = ctk.CTkFrame(new_window)
+        button_frame = ctk.CTkFrame(self.new_window)
         button_frame.pack(pady=20)
 
         close_button = ctk.CTkButton(
@@ -103,11 +86,32 @@ class CreateClientModal:
             text="Close",
             fg_color="red",
             width=100,
-            command=new_window.destroy,
+            command=self.new_window.destroy,
         )
         close_button.pack(side="left", padx=20)
 
         save_button = ctk.CTkButton(
-            button_frame, text="Save", fg_color="green", width=100, command=save_client
+            button_frame,
+            text="Save",
+            fg_color="green",
+            width=100,
+            command=self.save_client,
         )
         save_button.pack(side="right", padx=20)
+
+    def save_client(self):
+        new_client = {
+            "Name": self.name_entry.get(),
+            "Address_Line_1": self.line1_entry.get(),
+            "Address_Line_2": self.line2_entry.get(),
+            "Address_Line_3": self.line3_entry.get(),
+            "City": self.city_entry.get(),
+            "State": self.state_entry.get(),
+            "Zip_Code": self.zip_entry.get(),
+            "Country": self.country_entry.get(),
+            "Phone_Number": self.phone_entry.get(),
+        }
+        self.client_repo.create(new_client)
+        if self.callback is not None:
+            self.callback()
+        self.new_window.destroy()
