@@ -82,7 +82,7 @@ class FlightRepository:
             return self.records
         filtered = []
         for record in self.records:
-            if str(record["Start_City"]).startswith(start_city):
+            if str(record["Start_City"].lower()).startswith(start_city.lower()):
                 filtered.append(record)
         return filtered
 

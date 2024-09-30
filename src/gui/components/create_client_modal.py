@@ -20,84 +20,88 @@ class CreateClientModal:
             anchor="w", padx=20
         )
 
-        contact_frame = ctk.CTkFrame(self.new_window)
-        contact_frame.pack(pady=10, padx=20, fill="x")
+        self.contact_frame = ctk.CTkFrame(self.new_window)
+        self.contact_frame.pack(pady=10, padx=20, fill="x")
 
-        ctk.CTkLabel(contact_frame, text="Client Name: *").grid(
+        ctk.CTkLabel(self.contact_frame, text="Client Name: *").grid(
             row=0, column=0, padx=10, pady=5
         )
-        name_entry = ctk.CTkEntry(contact_frame, width=300)
-        name_entry.grid(row=0, column=1, padx=10)
+        self.name_entry = ctk.CTkEntry(self.contact_frame, width=300)
+        self.name_entry.grid(row=0, column=1, padx=10)
 
-        ctk.CTkLabel(contact_frame, text="Phone No.: *").grid(row=0, column=2, padx=10)
-        phone_entry = ctk.CTkEntry(contact_frame, width=300)
-        phone_entry.grid(row=0, column=3, padx=10)
+        ctk.CTkLabel(self.contact_frame, text="Phone No.: *").grid(
+            row=0, column=2, padx=10
+        )
+        self.phone_entry = ctk.CTkEntry(self.contact_frame, width=300)
+        self.phone_entry.grid(row=0, column=3, padx=10)
 
         # Client Info (Address)
         ctk.CTkLabel(self.new_window, text="Address", font=("Arial", 16, "bold")).pack(
             anchor="w", padx=20
         )
 
-        address_frame = ctk.CTkFrame(self.new_window)
-        address_frame.pack(pady=10, padx=20, fill="x")
+        self.address_frame = ctk.CTkFrame(self.new_window)
+        self.address_frame.pack(pady=10, padx=20, fill="x")
 
-        ctk.CTkLabel(address_frame, text="Line 1: *").grid(
+        ctk.CTkLabel(self.address_frame, text="Line 1: *").grid(
             row=0, column=0, padx=10, pady=5
         )
-        line1_entry = ctk.CTkEntry(address_frame, width=300)
-        line1_entry.grid(row=0, column=1, padx=10)
+        self.line1_entry = ctk.CTkEntry(self.address_frame, width=300)
+        self.line1_entry.grid(row=0, column=1, padx=10)
 
-        ctk.CTkLabel(address_frame, text="Line 2:").grid(
+        ctk.CTkLabel(self.address_frame, text="Line 2:").grid(
             row=1, column=0, padx=10, pady=5
         )
-        line2_entry = ctk.CTkEntry(address_frame, width=300)
-        line2_entry.grid(row=1, column=1, padx=10)
+        self.line2_entry = ctk.CTkEntry(self.address_frame, width=300)
+        self.line2_entry.grid(row=1, column=1, padx=10)
 
-        ctk.CTkLabel(address_frame, text="Line 3:").grid(
+        ctk.CTkLabel(self.address_frame, text="Line 3:").grid(
             row=2, column=0, padx=10, pady=5
         )
-        line3_entry = ctk.CTkEntry(address_frame, width=300)
-        line3_entry.grid(row=2, column=1, padx=10)
+        self.line3_entry = ctk.CTkEntry(self.address_frame, width=300)
+        self.line3_entry.grid(row=2, column=1, padx=10)
 
-        ctk.CTkLabel(address_frame, text="City: *").grid(row=0, column=2, padx=10)
-        city_entry = ctk.CTkEntry(address_frame, width=200)
-        city_entry.grid(row=0, column=3, padx=10)
+        ctk.CTkLabel(self.address_frame, text="City: *").grid(row=0, column=2, padx=10)
+        self.city_entry = ctk.CTkEntry(self.address_frame, width=200)
+        self.city_entry.grid(row=0, column=3, padx=10)
 
-        ctk.CTkLabel(address_frame, text="State: *").grid(row=1, column=2, padx=10)
-        state_entry = ctk.CTkEntry(address_frame, width=200)
-        state_entry.grid(row=1, column=3, padx=10)
+        ctk.CTkLabel(self.address_frame, text="State: *").grid(row=1, column=2, padx=10)
+        self.state_entry = ctk.CTkEntry(self.address_frame, width=200)
+        self.state_entry.grid(row=1, column=3, padx=10)
 
-        ctk.CTkLabel(address_frame, text="Zip Code: *").grid(row=2, column=2, padx=10)
-        zip_entry = ctk.CTkEntry(address_frame, width=200)
-        zip_entry.grid(row=2, column=3, padx=10)
+        ctk.CTkLabel(self.address_frame, text="Zip Code: *").grid(
+            row=2, column=2, padx=10
+        )
+        self.zip_entry = ctk.CTkEntry(self.address_frame, width=200)
+        self.zip_entry.grid(row=2, column=3, padx=10)
 
-        ctk.CTkLabel(address_frame, text="Country: *").grid(
+        ctk.CTkLabel(self.address_frame, text="Country: *").grid(
             row=3, column=0, padx=10, pady=5
         )
-        country_entry = ctk.CTkEntry(address_frame, width=300)
-        country_entry.grid(row=3, column=1, padx=10)
+        self.country_entry = ctk.CTkEntry(self.address_frame, width=300)
+        self.country_entry.grid(row=3, column=1, padx=10)
 
         # Save and Close buttons
-        button_frame = ctk.CTkFrame(self.new_window)
-        button_frame.pack(pady=20)
+        self.button_frame = ctk.CTkFrame(self.new_window)
+        self.button_frame.pack(pady=20)
 
-        close_button = ctk.CTkButton(
-            button_frame,
+        self.close_button = ctk.CTkButton(
+            self.button_frame,
             text="Close",
             fg_color="red",
             width=100,
             command=self.new_window.destroy,
         )
-        close_button.pack(side="left", padx=20)
+        self.close_button.pack(side="left", padx=20)
 
-        save_button = ctk.CTkButton(
-            button_frame,
+        self.save_button = ctk.CTkButton(
+            self.button_frame,
             text="Save",
             fg_color="green",
             width=100,
             command=self.save_client,
         )
-        save_button.pack(side="right", padx=20)
+        self.save_button.pack(side="right", padx=20)
 
     def save_client(self):
         new_client = {
