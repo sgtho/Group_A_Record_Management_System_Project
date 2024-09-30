@@ -1,9 +1,9 @@
 import json
 
 
-class ClientRepository:
+class AirlineRepository:
     """
-    ClientRepository is responsible for managing client records, which are stored in JSONL format.
+    AirlineRepository is responsible for managing airline records, which are stored in JSONL format.
     It provides methods to create, read, update, and delete (CRUD) records in a JSONL file.
     """
 
@@ -11,16 +11,16 @@ class ClientRepository:
         """
         Initializes the repository with the specified file and loads the existing records.
 
-        :param filename: The name of the JSONL file where client records are stored.
+        :param filename: The name of the JSONL file where airline records are stored.
         """
         self.filename = filename
         self.records = self.load_records()
 
     def load_records(self):
         """
-        Loads client records from the specified JSONL file.
+        Loads airline records from the specified JSONL file.
 
-        :return: A list of dictionaries, each representing a client record.
+        :return: A list of dictionaries, each representing an airline record.
         """
         records = []
         try:
@@ -33,7 +33,7 @@ class ClientRepository:
 
     def save_records(self):
         """
-        Saves all client records back to the JSONL file.
+        Saves all airline records back to the JSONL file.
         Each record is written as a separate line in JSON format.
         """
         with open(self.filename, "w") as file:
@@ -42,41 +42,41 @@ class ClientRepository:
 
     def create(self, record: dict):
         """
-        Adds a new client record to the repository and saves it to the JSONL file.
+        Adds a new airline record to the repository and saves it to the JSONL file.
 
-        :param record: The client record to add (as a dictionary).
+        :param record: The airline record to add (as a dictionary).
         """
         record["ID"] = len(self.records) + 1
-        record["Type"] = "Client"
+        record["Type"] = "Airline"
         self.records.append(record)
         self.save_records()
 
     def list(self):
         """
-        Lists all client records.
+        Lists all airline records.
 
-        :return: A list of all client records.
+        :return: A list of all airline records.
         """
         return self.records
 
-    def get(self, client_id: int):
+    def get(self, airline_id: int):
         """
-        Retrieves a client record by its ID.
+        Retrieves an airline record by its ID.
 
-        :param client_id: The ID of the client to retrieve.
-        :return: The client record if found, otherwise None.
+        :param airline_id: The ID of the airline to retrieve.
+        :return: The airline record if found, otherwise None.
         """
         for record in self.records:
-            if record["ID"] == client_id:
+            if record["ID"] == airline_id:
                 return record
         return None
 
     def search_by_name(self, name: str):
         """
-        Searches for client records by name.
+        Searches for airline records by airline company name.
 
-        :param name: The name or partial name to search for.
-        :return: A list of client records that match the provided name (case-insensitive).
+        :param name: The airline company name or partial name to search for.
+        :return: A list of airline records that match the provided airline company name (case-insensitive).
         """
         if len(name) == 0:
             return self.records
@@ -86,41 +86,41 @@ class ClientRepository:
                 filtered.append(record)
         return filtered
 
-    def search_by_id(self, client_id: str):
+    def search_by_id(self, airline_id: str):
         """
-        Searches for client records by partial or full ID.
+        Searches for airline records by partial or full ID.
 
-        :param client_id: The partial or full ID to search for.
-        :return: A list of client records that match the provided ID.
+        :param airline_id: The partial or full ID to search for.
+        :return: A list of airline records that match the provided ID.
         """
-        if len(client_id) == 0:
+        if len(airline_id) == 0:
             return self.records
         filtered = []
         for record in self.records:
-            if str(record["ID"]).startswith(client_id):
+            if str(record["ID"]).startswith(airline_id):
                 filtered.append(record)
         return filtered
 
     def update(self, updated_record: dict):
         """
-        Updates an existing client record.
+        Updates an existing airline record.
 
-        :param updated_record: The updated client record (as a dictionary).
+        :param updated_record: The updated airline record (as a dictionary).
         """
-        for idx, client in enumerate(self.records):
-            if client["ID"] == updated_record["ID"]:
+        for idx, airline in enumerate(self.records):
+            if airline["ID"] == updated_record["ID"]:
                 self.records[idx] = updated_record
                 break
         self.save_records()
 
     def delete(self, record: dict):
         """
-        Deletes a client record from the repository.
+        Deletes an airline record from the repository.
 
-        :param record: The client record to delete (as a dictionary).
+        :param record: The airline record to delete (as a dictionary).
         """
-        for idx, client in enumerate(self.records):
-            if client["ID"] == record["ID"]:
+        for idx, airline in enumerate(self.records):
+            if airline["ID"] == record["ID"]:
                 del self.records[idx]
                 break
         self.save_records()
