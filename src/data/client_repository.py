@@ -40,12 +40,32 @@ class ClientRepository:
             for record in self.records:
                 file.write(json.dumps(record) + "\n")  # Write each record as a new line
 
+    def is_valid(self, record):
+        """
+        Checks if a client record is valid, throws exception if it isn't
+
+        :param record: The client record to check
+        """
+        required_fields = [
+            "Name",
+            "Address_Line_1",
+            "City",
+            "State",
+            "Zip_Code",
+            "Country",
+            "Phone_Number",
+        ]
+        for required_filed in required_fields:
+            if record[required_filed] is None or record[required_filed] == "":
+                raise Exception(f"Client record missing {required_filed} field")
+
     def create(self, record: dict):
         """
         Adds a new client record to the repository and saves it to the JSONL file.
 
         :param record: The client record to add (as a dictionary).
         """
+        self.is_valid(record)
         record["ID"] = len(self.records) + 1
         record["Type"] = "Client"
         self.records.append(record)
@@ -107,6 +127,7 @@ class ClientRepository:
 
         :param updated_record: The updated client record (as a dictionary).
         """
+        self.is_valid(updated_record)
         for idx, client in enumerate(self.records):
             if client["ID"] == updated_record["ID"]:
                 self.records[idx] = updated_record

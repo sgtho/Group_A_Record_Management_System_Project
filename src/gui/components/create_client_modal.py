@@ -20,6 +20,13 @@ class CreateClientModal:
             anchor="w", padx=20
         )
 
+        self.error_label = ctk.CTkLabel(
+            self.new_window,
+            text="",
+            text_color="#e67a67",
+            font=("Arial", 16, "bold"),
+        )
+
         self.contact_frame = ctk.CTkFrame(self.new_window)
         self.contact_frame.pack(pady=10, padx=20, fill="x")
 
@@ -115,7 +122,14 @@ class CreateClientModal:
             "Country": self.country_entry.get(),
             "Phone_Number": self.phone_entry.get(),
         }
-        self.client_repo.create(new_client)
+
+        try:
+            self.client_repo.create(new_client)
+        except Exception as e:
+            self.error_label.pack()
+            self.error_label.configure(text=f"Error creating client: {e}")
+            return
+
         if self.callback is not None:
             self.callback()
         self.new_window.destroy()

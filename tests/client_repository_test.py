@@ -13,7 +13,34 @@ class TestClientRepository(unittest.TestCase):
         self.filename = "test_clients.jsonl"
         # records have other fields as well but we only
         # set ID and Name as this is all we need for the tests
-        self.initial_records = [{"ID": 1, "Name": "Alice"}, {"ID": 2, "Name": "Bob"}]
+        self.initial_records = [
+            {
+                "ID": 1,
+                "Name": "Alice",
+                "Type": "Customer",
+                "Address_Line_1": "123 Main St",
+                "Address_Line_2": "Apt 4B",
+                "Address_Line_3": "",
+                "City": "New York",
+                "State": "NY",
+                "Zip_Code": "10001",
+                "Country": "USA",
+                "Phone_Number": "+1-555-555-5555",
+            },
+            {
+                "ID": 2,
+                "Name": "Bob",
+                "Type": "Customer",
+                "Address_Line_1": "123 Main St",
+                "Address_Line_2": "Apt 4B",
+                "Address_Line_3": "",
+                "City": "New York",
+                "State": "NY",
+                "Zip_Code": "10001",
+                "Country": "USA",
+                "Phone_Number": "+1-555-555-5555",
+            },
+        ]
         with open(self.filename, "w") as file:
             for record in self.initial_records:
                 file.write(json.dumps(record) + "\n")
@@ -39,7 +66,18 @@ class TestClientRepository(unittest.TestCase):
         """
         Test that a new record is added successfully.
         """
-        new_record = {"Name": "Charlie"}
+        new_record = {
+            "Name": "Charlie",
+            "Type": "Customer",
+            "Address_Line_1": "123 Main St",
+            "Address_Line_2": "Apt 4B",
+            "Address_Line_3": "",
+            "City": "New York",
+            "State": "NY",
+            "Zip_Code": "10001",
+            "Country": "USA",
+            "Phone_Number": "+1-555-555-5555",
+        }
         self.repo.create(new_record)
 
         records = self.repo.list()
@@ -92,7 +130,19 @@ class TestClientRepository(unittest.TestCase):
         """
         Test that an existing record is updated correctly.
         """
-        updated_record = {"ID": 1, "Name": "Alicia"}
+        updated_record = {
+            "ID": 1,
+            "Name": "Alicia",
+            "Type": "Customer",
+            "Address_Line_1": "123 Main St",
+            "Address_Line_2": "Apt 4B",
+            "Address_Line_3": "",
+            "City": "New York",
+            "State": "NY",
+            "Zip_Code": "10001",
+            "Country": "USA",
+            "Phone_Number": "+1-555-555-5555",
+        }
         self.repo.update(updated_record)
 
         record = self.repo.get(1)
@@ -102,7 +152,19 @@ class TestClientRepository(unittest.TestCase):
         """
         Test that a record is deleted successfully.
         """
-        record_to_delete = {"ID": 1, "Name": "Alice"}
+        record_to_delete = {
+            "ID": 1,
+            "Name": "Alice",
+            "Type": "Customer",
+            "Address_Line_1": "123 Main St",
+            "Address_Line_2": "Apt 4B",
+            "Address_Line_3": "",
+            "City": "New York",
+            "State": "NY",
+            "Zip_Code": "10001",
+            "Country": "USA",
+            "Phone_Number": "+1-555-555-5555",
+        }
         self.repo.delete(record_to_delete)
 
         records = self.repo.list()
