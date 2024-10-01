@@ -17,6 +17,13 @@ class CreateAirlineModal:
             self.new_window, text="New Airline", font=("Arial", 20, "bold")
         ).pack(pady=10)
 
+        self.error_label = ctk.CTkLabel(
+            self.new_window,
+            text="",
+            text_color="#e67a67",
+            font=("Arial", 16, "bold"),
+        )
+
         company_frame = ctk.CTkFrame(self.new_window)
         company_frame.pack(pady=10, padx=20, fill="x")
 
@@ -55,6 +62,13 @@ class CreateAirlineModal:
             "Type": "Airline",  # Type is set to "Airline"
             "Company_Name": self.name_entry.get(),
         }
-        self.airline_repo.create(self.new_airline)  # Save to airlines.jsonl
+
+        try:
+            self.airline_repo.create(self.new_airline) # Save to airlines.jsonl
+        except Exception as e:
+            self.error_label.pack()
+            self.error_label.configure(text=f"Error creating airline: {e}")
+            return
+
         self.callback()  # Reload the airline table to show the new record
         self.new_window.destroy()  # Close the window after saving
