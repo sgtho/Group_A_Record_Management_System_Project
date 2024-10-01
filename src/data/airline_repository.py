@@ -39,6 +39,18 @@ class AirlineRepository:
         with open(self.filename, "w") as file:
             for record in self.records:
                 file.write(json.dumps(record) + "\n")  # Write each record as a new line
+    
+    def is_valid(self, record):
+        """
+        Checks if a airline record is valid, throws exception if it isn't
+        :param record: The airline record to check
+        """
+        required_fields = [
+            "Company_Name",
+        ]
+        for required_filed in required_fields:
+            if record[required_filed] is None or record[required_filed] == "":
+                raise Exception(f"Airline record missing {required_filed} field")
 
     def create(self, record: dict):
         """
@@ -46,6 +58,7 @@ class AirlineRepository:
 
         :param record: The airline record to add (as a dictionary).
         """
+        self.is_valid(record)
         record["ID"] = len(self.records) + 1
         record["Type"] = "Airline"
         self.records.append(record)
@@ -107,6 +120,7 @@ class AirlineRepository:
 
         :param updated_record: The updated airline record (as a dictionary).
         """
+        self.is_valid(updated_record)
         for idx, airline in enumerate(self.records):
             if airline["ID"] == updated_record["ID"]:
                 self.records[idx] = updated_record
