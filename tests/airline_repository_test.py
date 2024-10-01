@@ -42,7 +42,7 @@ class TestAirlineRepository(unittest.TestCase):
         """
         Test that a new record is added successfully.
         """
-        new_record = {"Company_Name": "Space Air"}
+        new_record = {"Type": "Airline", "Company_Name": "Space Air"}
         self.repo.create(new_record)
 
         records = self.repo.list()
@@ -95,7 +95,7 @@ class TestAirlineRepository(unittest.TestCase):
         """
         Test that an existing record is updated correctly.
         """
-        updated_record = {"ID": 1, "Company_Name": "Worldwide Airline"}
+        updated_record = {"ID": 1, "Type": "Airline", "Company_Name": "Worldwide Airline"}
         self.repo.update(updated_record)
 
         record = self.repo.get(1)
@@ -105,7 +105,7 @@ class TestAirlineRepository(unittest.TestCase):
         """
         Test that a record is deleted successfully.
         """
-        record_to_delete = {"ID": 1, "Company_Name": "Global Airline"}
+        record_to_delete = {"ID": 1, "Type": "Airline", "Company_Name": "Global Airline"}
         self.repo.delete(record_to_delete)
 
         records = self.repo.list()
