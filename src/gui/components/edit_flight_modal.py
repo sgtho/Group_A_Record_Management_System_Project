@@ -11,6 +11,14 @@ class EditFlightModal:
         self.view_window = ctk.CTkToplevel()
         self.view_window.title(f"Flight ID #{flight['ID']}")
         self.view_window.geometry("800x600")
+        self.view_window.focus_force()
+
+        self.error_label = ctk.CTkLabel(
+            self.view_window,
+            text="",
+            text_color="#e67a67",
+            font=("Arial", 16, "bold"),
+        )
 
         # Flight ID
         ctk.CTkLabel(
@@ -217,7 +225,15 @@ class EditFlightModal:
             "Start_City": self.start_city_entry.get(),
             "End_City": self.end_city_entry.get(),
         }
-        self.flight_repo.update(updated_flight)  # Save the updated flight details
+
+        try:
+            self.flight_repo.update(updated_flight)  # Save the updated flight details
+        except Exception as e:
+            self.error_label.pack()
+            self.error_label.configure(text=f"Error creating flight: {e}")
+            self.confirmation_window.destroy()
+            return
+        
         self.confirmation_window.destroy()
         self.view_window.destroy()  # Close the window after updating
         self.callback()  # Refresh the table to reflect changes
