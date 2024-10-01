@@ -13,6 +13,13 @@ class EditAirlineModal:
         self.view_window.geometry("800x600")
         self.view_window.focus_force()
 
+        self.error_label = ctk.CTkLabel(
+            self.view_window,
+            text="",
+            text_color="#e67a67",
+            font=("Arial", 16, "bold"),
+        )
+
         # Airline ID
         ctk.CTkLabel(
             self.view_window,
@@ -92,7 +99,15 @@ class EditAirlineModal:
             "Type": "Airline",
             "Company_Name": self.airline_name_entry.get(),
         }
-        self.airline_repo.update(updated_airline)  # Save the updated airline details
+
+        try:
+            self.airline_repo.update(updated_airline)  # Save the updated airline details
+        except Exception as e:
+            self.error_label.pack()
+            self.error_label.configure(text=f"Error creating airline: {e}")
+            self.confirmation_window.destroy()
+            return
+
         self.confirmation_window.destroy()
         self.view_window.destroy()  # Close the window after updating
         self.callback()  # Refresh the table to reflect changes
@@ -200,9 +215,17 @@ class EditAirlineModal:
             "Type": "Airline",
             "Company_Name": self.airline_name_entry.get(),
         }
-        self.airline_repo.update(
-            self.updated_airline
-        )  # Save the updated airline details
+
+        try:
+            self.airline_repo.update(
+                self.updated_airline
+        )   # Save the updated airline details
+        except Exception as e:
+            self.error_label.pack()
+            self.error_label.configure(text=f"Error creating airline: {e}")
+            self.confirmation_window.destroy()
+            return
+
         self.confirmation_window.destroy()
         self.view_window.destroy()  # Close the window after updating
         self.callback()  # Refresh the table to reflect changes
