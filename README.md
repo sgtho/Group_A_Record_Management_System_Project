@@ -2,9 +2,20 @@
 This group project is to design a record management system for a specialist travel agent. The system will manage three types of records: 1. Client records, 2. Flight Records and 3. Airline Company records.
 
 ### How do I get set up? ###
+Set up venv environment
+On MacOS/Linux you can run:
+```
+python3 -m venv venv
+```
+
+On Windows you can run:
+```
+python -m venv venv
+```
+
 Using the terminal, on MacOS/Linux systems, from inside this project directory run:
 ```
-source .venv/bin/activate
+source venv/bin/activate
 ```
 
 If using windows, you will need to run (Command Prompt):
@@ -14,6 +25,11 @@ If using windows, you will need to run (Command Prompt):
 
 If using PyCharm it should automatically detect the `.venv` directory and will show a banner which you can click
 to use the `.venv` configuration.
+
+Install the dependencies:
+```
+pip install -r requirements.txt
+```
 
 # Running the code
 To start the application you can run:
